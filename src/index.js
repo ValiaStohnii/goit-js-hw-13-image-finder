@@ -1,5 +1,6 @@
 import './sass/main.scss';
 import ApiService from './js/apiService';
+import photoCardTpl from './partials/photo-card.hbs';
 
 const apiService = new ApiService();
 
@@ -17,11 +18,14 @@ function onSearch(e) {
 
     apiService.query = e.currentTarget.elements.query.value;
     apiService.resetPage();
-    apiService.fetchArticles().then(photos=>console.log(photos));
+    apiService.fetchArticles().then(photosMarkup);
 
 }
 
 function onLoadMore() {
-    apiService.fetchArticles().then(photos=>console.log(photos));
+    apiService.fetchArticles().then(photosMarkup);
 }
 
+function photosMarkup(photos) {
+    refs.galleryContainer.insertAdjacentHTML('beforeend', photoCardTpl(photos));
+}

@@ -15,10 +15,15 @@ export default class ApiService{
         return fetch(url, option)
         .then(r => r.json())
             .then(data => {
-                this.page += 1;
+                this.incrementPage();
+                
                 return data.photos;
         });
         
+    }
+
+    incrementPage() {
+        this.page += 1;
     }
 
     resetPage() {
