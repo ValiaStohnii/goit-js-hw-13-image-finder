@@ -50,6 +50,11 @@ function loadPhotos() {
     loadButton.disable();
     apiService.fetchArticles().then(photos => {
         console.log(photos);
+        if (photos.length === 0) {
+       return error({
+                text: "Please enter a more specific query!"
+            });
+        }
         photosMarkup(photos);
         loadButton.enable();
     });

@@ -10,7 +10,7 @@ export default class ApiService{
                 Authorization: '563492ad6f91700001000001d92c485916fd48c1802ebd8935846f8a',
             }
         };
-        const url = `https://api.pexels.com/v1/search?query=${this.searchQuery}?page=${this.page}&per_page=12`;
+        const url = `https://api.pexels.com/v1/search?query=${this.query}&page=${this.page}&per_page=12`;
         
         return fetch(url, option)
         .then(r => r.json())
