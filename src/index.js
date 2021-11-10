@@ -2,6 +2,9 @@ import './sass/main.scss';
 import ApiService from './js/apiService';
 import photoCardTpl from './partials/photo-card.hbs';
 import LoadButton from './js/load-button';
+import { error } from '@pnotify/core';
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/PNotify.css';
 
 const apiService = new ApiService();
 const loadButton = new LoadButton({
@@ -21,9 +24,17 @@ loadButton.refs.button.addEventListener('click', onLoadMore);
 function onSearch(e) {
     e.preventDefault();
 
+    apiService.query = e.currentTarget.elements.query.value;
+
+    if (apiService.query === '') {
+       return error({
+                text: "You must enter query parameters!"
+            });
+    }
+
     loadButton.show();
     clearGaleryContainer();
-    apiService.query = e.currentTarget.elements.query.value;
+    
     window.addEventListener('keydown', onEnterKeyPress);
     apiService.resetPage();
     loadPhotos();
@@ -38,6 +49,7 @@ function onLoadMore() {
 function loadPhotos() {
     loadButton.disable();
     apiService.fetchArticles().then(photos => {
+        console.log(photos);
         photosMarkup(photos);
         loadButton.enable();
     });
